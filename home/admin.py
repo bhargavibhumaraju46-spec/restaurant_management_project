@@ -1,23 +1,18 @@
-from django.db import models
-class Restaurants(models.Model):
-    name = models.CharField(max_length=255)
-    def __str__(self):
-        return self.name
- RESTAURANT_NAME = 'Your Restaurant Name'
- from django.shortcuts import render
- from .models import Restaurant
-def homepage(request):
-    try:
-        restaurant = Restaurant.objects.first()
-        return render(request, 'homepage.html', {'restaurant_name': restaurant.name})
-     except Restaurant.DoesNotExist:
-        return render(request, 'homepage.html', {'restaurant_name':'Default Name'}) 
 from django.shortcuts import render
-from django.conf import settings
-def homepage(request, 'homepage.html', {'restaurant_name: settings.RESTAURANT_NAME'})
-from django .urls import path
-from . import views
-urlpatterns = [
-    path('', views.homepage, name='homepage'),
+def home(request):
+    context = {
+        'restaurant_name': 'Tasty Bites,
+        'welcome_message': 'Enjoy your dining experience!',
+    }
+    return render(request, 'restaurant/home.html', context)
+    from django.urls import path
+    from . import views
+    urlpatterns = [
+        path('', views.home, name='home'),
+    ]
+    from django.contrib import admin
+    from django.urls
+    import include, path
+    urlpatterns = [path('admin/', admin.site.urls),path('', include('restaurant.urls')),
     ]
 
