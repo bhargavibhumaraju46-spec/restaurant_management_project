@@ -1,15 +1,14 @@
 from django.shortcuts import render
-def menu_view(request):
-    menu_items = [
-        {'name': 'Item 1', 'price':10.99},
-        {'name': 'Item 2', 'price': 8.9},
-        {'name': 'Item 3', 'price':7.9},
-    ]
-       return render(request,'menu.html', {'menu_items': menu_items})
-from django.urls import path
-from .import views
-urlpatterns = [
-    path('menu/', views.menu_view, name='menu_view'),
-]       
-
-
+RESTAURANT_PHONE_NUMBER = '+91-1234567890'
+from django.db import models
+class Restaurant(models.Model):
+    phone_number = models.CharField(max_length=20)
+    from django.shortcuts import render
+    from django.conf import settings
+def homepage(request):
+    return render(request, 'homepage.html', {'phone_number': settings.RESTAURANT_PHONE_NUMBER})
+from django.shortcuts import render
+from .models import Restaurant
+def homepage(request):
+    restaurant = Restaurant.objects.first()
+    return render(request, 'homepage.html', {'phone_number': restaurant.phone_number})    
