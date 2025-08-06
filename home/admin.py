@@ -1,5 +1,9 @@
 from django.shortcuts import render
-def tom_404(request, exception):
-    return render(request, '404.html', status=404)
-    handler404 = 'your_app.views.custom_404'
+def about_us(request):
+    return render(request, 'about_us.html')
+    from django.urls import path
+    from .import views
+url patterns = [path('about-us/', views.about_us, name='about_us'),
+  ]    
+
 
