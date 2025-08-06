@@ -1,7 +1,10 @@
-from django.shortcuts import render
-def contact_us(request):
-    return request, 'contact_us.html')
-from django.urls import path
-fron .import views
-urlpatterns = [path('contact-us/', views.contact_us, name='contact_us'),
-]
+from flask import Flask, render_template
+app=Flask(__name__)
+Aapp.route('/')
+def home():
+    return render_template("home.html")
+    @app.route('/about/')
+    def about():
+        return render_template("about.html")
+        if__name__=="__main__":
+            apprun(debug=True)
