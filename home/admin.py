@@ -1,14 +1,15 @@
-body {
-    font_family:Arial: Arial, sans-serif:
-    background-color;
-    margin: 20px;
-    padding:0;
-}
-h1{
-    color:
-    padding-bottom:10px;
-}
-<!--templates/homepage.html-->
-{% load static %}
-<link rel="stylesheet" type="text/css" href='{%static 'css/styles.css' %}">
-<h1>welcome to our homepage</h1>
+<!-- templates/contact.html-->
+<form>
+ <label for="name">Name:</label>
+ <input type="text" id="name" name="name" required>
+ <label for="email">Email:</label>
+ <input type="email" id="email"name="email" required>
+ <input type="submit" value="submit">
+</form>
+
+
+
+
+
+
+
