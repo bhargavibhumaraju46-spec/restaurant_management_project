@@ -1,12 +1,14 @@
-from datetime import datetime
-def current_year(request):
-    return{'current_year':datetime.now().year} 
-    TEMPLATES = [
-        {
-            'OPTIONS': {
-                'context_processors': [
-                    'your_app.context_processors.current_year',
-                ],
-            },
-        },
-    ]
+body {
+    font_family:Arial: Arial, sans-serif:
+    background-color;
+    margin: 20px;
+    padding:0;
+}
+h1{
+    color:
+    padding-bottom:10px;
+}
+<!--templates/homepage.html-->
+{% load static %}
+<link rel="stylesheet" type="text/css" href='{%static 'css/styles.css' %}">
+<h1>welcome to our homepage</h1>
