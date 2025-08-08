@@ -1,7 +1,12 @@
-from django.uts import render
-def reservations(request):
-    reutn render(request, 'reservations.html')
-from django.urls import path
-from .import views
-urlpatterns = [path('reservations/', views.reservations, name='reservations'),
-]    
+from datetime import datetime
+def current_year(request):
+    return{'current_year':datetime.now().year} 
+    TEMPLATES = [
+        {
+            'OPTIONS': {
+                'context_processors': [
+                    'your_app.context_processors.current_year',
+                ],
+            },
+        },
+    ]
