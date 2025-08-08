@@ -1,7 +1,8 @@
-from django.contrib import admin
-from .models import Menu, order
-admin.site.register(Menu)
-admin.site.register(Order)     
+from django.db import models
+from django.contrib.auth.models import user
+class userProfile(models.Model):
+    user = models.OneToOneField(user, on_delete=models.CASCADE)
+    phone_number = models.CharField(max_length=15)   
 
 
 
