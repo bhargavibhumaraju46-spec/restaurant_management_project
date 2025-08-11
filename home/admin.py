@@ -1,21 +1,11 @@
 from django.db import models
-class ContactSubmission(models.Model):
+class MenuItem(models.Model):
     name = models.CharField(max_length=100)
-    email = models.EmailField()
-from django import forms
-from .models import ContactSubmission
-class ContactForm(forms.ModelForm):
-    class Meta:
-        model = ContactSubmission
-        fields = ['name', 'email']
-from django.shortcuts import render, redirect
-from .forms import ContactForm
-def contact_view(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('contact_view')
-        else:
-            form = ContactForm()
-            return render(request, 'contact.html', {'form': form})            
+    description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    image = models.ImageField(upload_to='menu_images/', blank=True)
+from django.shortcuts import render
+from .models import MenuItem
+def menu_view(request):
+    menu_items = MenuItem.objects.all()
+    return render(request, 'menu.html', {'menu_items': menu_items})    
