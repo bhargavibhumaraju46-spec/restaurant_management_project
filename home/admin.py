@@ -1,7 +1,6 @@
 from django.db import models
-class MenuItems(models.Model):
-    name = models.harField(max_length=100)
-    description = models.TextField()
-    price = models.decimalField(max_digits=10, decimal_places=2)
-python manage.py makemigrations
-python manage.py migrate    
+class RestaurantLocation(models.Model):
+    address = models.CharField(max_length=255)
+    city = models.CharField(max_lenth=100)
+    state = models.CharField(max_length=100)
+    zip_code = models.CharField(max_length=20)
