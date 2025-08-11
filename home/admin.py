@@ -1,22 +1,12 @@
-from django.db import models
-class ContactSubmission(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.EmailField()
-from django import forms
-from .models import ContactSubmission
-class contactForm(forms.ModelForm):
-    class Meta:
-        model = ContactSubmission
-        fields = ['name', 'email']
-from django.shortuts import render, redirect
-from .forms import ContactForm
-def homepage(request):
-    if request.method == 'POST'
-    form  = ContactForm(request.POST)
-    if form.is_valid():
-        form.save()
-        return redirect('homepage')
-        else:
-            form = ContactForm()
-        return render(request, 'homepage.html', {'form': form})       
+<!-- templates/homepage.html -->
+<h2>Reataurant Location</h2>
+<p>Address: 123 Main St, Anytown, India</p>
+<iframe
+    width="600"
+    height="450"
+    style="border:0" 
+    loading="lazy"
+    allowfullscreen
+    src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=123+St, +Anytown, +India">
+</frame>         
 
