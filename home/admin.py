@@ -1,22 +1,22 @@
-from rest_framework.views.import APIView
-from rest_framework.response import response
-from rest_framework import serializer
-menu_items = [
-    {"dish_name": "Pasta Carbonara", "Classic creamy pasta with pancetta", "price": 12.99},
-    {"dish_name": "Margherita Pizza", "description": "Tomato, mozzarella, and basil", "price":10.50},
-]
-class MenuAPIView(APIView):
-    def get(self, request):
-        serializer = MenuItemSerializer(menu_items, many=True)
-        return Response(serializer.data)
-from django.urls import path
-from .views import MenuAPIView
-urlpatterns = [
-    path('menu/', MenuAPIView.as_view(), name='menu_api'),
-]
-from django.contrib import admin
-from django.urls import path, include
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include('menu_app.urls')),
-]
+from django.db import models
+class ContactSubmission(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+from django import forms
+from .models import ContactSubmission
+class contactForm(forms.ModelForm):
+    class Meta:
+        model = ContactSubmission
+        fields = ['name', 'email']
+from django.shortuts import render, redirect
+from .forms import ContactForm
+def homepage(request):
+    if request.method == 'POST'
+    form  = ContactForm(request.POST)
+    if form.is_valid():
+        form.save()
+        return redirect('homepage')
+        else:
+            form = ContactForm()
+        return render(request, 'homepage.html', {'form': form})       
+
