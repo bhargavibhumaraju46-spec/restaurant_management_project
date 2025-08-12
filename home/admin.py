@@ -1,14 +1,8 @@
 from flask import Flask, render_template
 app = Flask(__name__)
-faqs = [
-    {"question": "what is this website about?", "answer": "this website provides information and resources on various topics"},
-    {"question": "how can i contact support?", "answer": "you can contact support via email at support@example.com."},
-]      
+welcome_message = "welcome to our restaurant enjoy your dining experience"
 @app.route('/')
 def homepage():
-    return render_template('homepage.html')
-@app.route('/faq')
-def faq():
-    return render_template('faq.html', faqs=faqs)
+    return render_template('homepage.html', welcome_message=welcome_message)
     if __name__ == '__main__':
         app.run(debug=True)
