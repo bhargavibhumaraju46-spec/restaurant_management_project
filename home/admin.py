@@ -1,16 +1,27 @@
 from django.db import models
-class Restaurant(models.Model):
-    name = models.CharField(max_length=255)
-    logo = models.ImageField(upload_to='restaurant_logos/')
-from django.shortcuts import render
-from .models import Restaurant
-def homepage(request):
-    restaurant = Reataurant.objects.first()
-    return render(request, 'homepage.html',{'restaurant':restaurant})
-from flask import Flask, render_template
-app = Flask(__name__)
-@app.route('/')
-def homepage():
-    logo_path = 'path_to_logo.jpg'
-    return render_template('homepage.html', logo_path=logo_path)
-<img src="{{ url_for('static', filename=logo_path) }}" alt="Restaurant Logo">    
+class Contact(models.Model):
+    email = models.EmailField()
+    message = models.TextField()
+from django import forms
+class ContactForm(forms.Form):
+    email = forms.EmailField(label='Your Email', required=True)
+    message = forms.CharField(label='Message', widget=forms.Textarea, required=True)
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if not email.endswith('@example.com'):
+            raise forms.ValidationError("Email must end with @example.com") 
+            return email
+from django.shortcuts import render, redirect
+from .forms import Contact
+def contact_view(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            print(f"Email: {email}, Message: {message}")
+            return redirect('success_url')
+       else:
+        form = ContactForm()
+        return render(request, 'contact.html', {'form': form})
+
