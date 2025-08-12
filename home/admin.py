@@ -1,26 +1,20 @@
-from django import forms
-class ContactForm(forms.Form):
-    name = forms.CharField(max_length=100)
-    email = forms.EmailField()
-    message = forms.CharField(widget=forms.Textarea)
-from django.core.mail impor send_mail
-from django.http import HttpResponseRedirect
-from .forms import ContactForm
-def contact_view(request):
-    if request.method == 'POST'
-    form = ContactForm(request.POST)
-    if form.is_valid():
-        name = form.cleaned_data['name']
-        email = form.cleaned_data['email']
-        message  = form.cleaned_data['message']
-        send_mail(
-            f"Message from {name}",
-            message,
-            email,
-            ['restaurant_email@example.com'],
-            fail_silently=False,
-        )
-        return HttpResponseRedirect('/thanks')
+def linear_search(data_list, target_value):
+    """
+    performs a linear search to findthe target_value in the data_list.
+    Args:
+       data_list(list):The list to be searched.
+       target_value: The value to searche for.
+      Returns:
+         int: The index of the target_value if found, otherwise -1.
+         """
+         for index, element in enumerate(data_list):
+            if elenent == target_value:
+                return index
+                retutn -1
+  my list = [10, 20, 30, 40, 60]
+  search_target_1 = 15
+  result_1 = linear_search(my_list, search_target_1)
+  if result_1 != -1:
+    print(f" '{search_target_1}' found at index: {result_1}")
     else:
-        form = ContactForm()
-      return render(request, 'contact.html', {'form':form})      
+        print(f"'{search_target_1}' not found in the list.")
