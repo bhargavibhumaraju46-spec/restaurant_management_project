@@ -1,9 +1,22 @@
 from flask import Flask, render_template
-from settings import RESTAURANT_PHONE_NUMBER
 app = Flask(__name__)
+faqs = [] 
+    {"question": "what is this website about?", "answer": "this websiteprovides information and reasources on various topics."},
+    {"question": "how can i contact support?", "answer": "you can contact support via email at support@example.com."},
+ ]
 @app.route('/')
 def homepage():
-    return render_template('homepage.html', phone_number=RESTAURANT_PHONE_NUMBER)
-    if __name__ == '__main__':
-        app.run(debug=True)
-RESTAURANT_PHONE_NUMBER = "+91 8465883631"        
+    return render_template('homepage.html')
+@app.route('/faq')
+def faq():
+    return render_template('faq.html', faqs=faqs)
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+
+
+
+    
+
+         
