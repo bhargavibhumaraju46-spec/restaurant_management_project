@@ -18,4 +18,4 @@ def upload_image():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return jsonify({'message': 'Image uploaded successfully', 'filename': filename}), 200
    if __name__ == '__main__':
-    app.run(debug=True)                 
+    app.run(debug=True)             
