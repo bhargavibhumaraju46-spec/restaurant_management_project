@@ -1,21 +1,16 @@
-from flask import Flask, request,jsonify
-from werkjeug.utils import secure_filename
-import os
+from flask import Flask
+from flask_sqlalchemy import flask_sqlalchemy
 app = Flask(__name__)
-UPLOAD_FOLDER = 'static/images'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDERALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-@app.route('/upload_image', methods=['POST'])
-def upload_image():
-    if 'image' not in request.files:
-        return jsonify({'error': 'No image part'}), 400
-        file = request.files['image']
-        if file.filename == '':
-            return jsonify({'error': 'No selected file'}), 400 
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return jsonify({'message': 'Image uploaded successfully', 'filename': filename}), 200
-   if __name__ == '__main__':
-    app.run(debug=True)             
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///specials.db'
+db = SQLAlchemy(app)
+class TodaySpecial(db.model):
+    id = db.Column(db.Integer,primary_key=True)
+    item_name = db.Column(db.String(100),nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    price = db.Column(db.Float, nullale=False)
+    def __repe__(self):
+        return f"TodaysSpecial('{self.item_name}', '{self.description}', {self.price})"
+ @app.route('/')
+ def homepage():
+    specials = TodaysSpecial.query.all()
+    return render_template('homepage.html', specials=specials)       
