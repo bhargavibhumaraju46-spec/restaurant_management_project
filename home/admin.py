@@ -1,32 +1,28 @@
-from flask import Flask, session, request, jsonify
-app = Flask(__name__)
-app.secret_key = 'your_secret_key'
-menu_items = [
-    {'id': 1, 'name':'Item 1', 'price': 100},
-    {'id': 2, 'name':'Item 2', 'price': 200},
-    {'id': 3, 'name':'Item 3', 'price': 300},
-]
-@app.route('/add_to_cart', methods=['POST'])
-def add_to_cart():
-    item_id = request.json['item_id']
-    if 'cart' not in session:
-        session['cart'] = [] 
-        for item in session['cart']:
-            if item['id'] == item_id:
-                item['quantity'] = item.get('quantity', 1) + 1
-                session.modified = True
-                return jsonify({'message': 'Item quantity updated in cart'})
-item = next((i for i in menu_items if i['id'] == item_id), None)
-if item:
-    session['cart'].append({'id': item['id'], 'name': item['name'], 'price':item['price'], 'quantity':1})
-    session.modified = True
-    return jsonify({'message': 'Item added to cart'})
-    return jsonify({'error': 'Item not found'}), 404
-    @app route('/view_cart', methods=['GET'])
-    def view_cart():
-        if 'cart' in session:
-            return jsonify(session['cart'])
-            else:
-                return jsonify({'message': 'Cart is empty'})
-   if __name__ == '__main__':
-       app.run(debug=True)                
+from django.db import models
+class RestaurantSettings{models.Model):
+    opening_hours = models.TextField()
+    def __str__(self):
+        return "Restaurant Opening Hours"
+        RESTAURANT_OPENING_HOURS = {
+            'Monday': '10:00 AM -10:00 PM',
+            'Tuesday': '10:00 AM -10:00 PM',
+            'Wednesday': '10:00 AM -10:00 PM',
+            'Thursday': '11:00 AM - 11:00 PM',
+            'Friday': '9:00 AM - 9:00 PM',
+            'Saturday': '8:00 AM - 9:00 PM',
+            'Sunday': '9:00 AM - 9:00 PM',
+        }
+         from  django.shortcuts import render
+         from .models import RestaurantSettings
+         def homepage(request):
+            Restaurant_hours = RestaurantSettings.objects.first()
+            return render(request, 'homepage.html', {'restaurant_hours': restaurant_hours})
+     {% if restaurant_hours %}
+        <h2>OPENING_HOURS</h2>
+        <!-- If using a model -->
+        <p>{{ restaurant_hours.opening_hours }}</p>
+        <!-- If using settings -->
+        {% for day, hours in Restaurant_hours.items %}
+            <p>{{ day }}: {{ hours }}</p>
+        {% endfor %}
+    {% endif %}              
