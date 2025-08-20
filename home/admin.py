@@ -1,19 +1,25 @@
 from django.db import models
 class Restaurant(models.Model):
-    address = models.TextField()
-    def __str__(self):
-        return "Reataurant Details"
-from django.shortcuts import render
+    description = models.TextField()
+from django import forms
 from .models import Restaurant
-def contact_us(request):
-    try:
-        restaurant = Restaurant.objects.first()
-        address = restaurant.address
-    except AttributeError:
-        address = "Address not set."
-    return render(request, 'contact_us.html', {'address': address})
-    from django.urls import path
-    from .views import contact_us
-    urlpatterns = [
-        path('contact-us/', contact_us, name='contact_us'),
-    ]
+class RestaurantForm(forms.ModelForm):
+    class Meta:
+        model = Restaurant
+        fields = ['description']
+from django.shortcuts import render, redirect
+from .forms import RestaurantForm
+def add_description(request):
+    if request.method == 'POST':
+        form = RestaurantForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('about_us')
+        else:
+            form = RestaurantForm()
+         return render(request, 'add_description.html', {'form': form})
+  from django.shortcuts import rende
+  rfrom .models import Restaurant 
+  def about_us(request):
+    description = Restaurant.objects.first()
+    return render(request, 'about_us.html', {'description': description})
