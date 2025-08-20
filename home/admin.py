@@ -1,10 +1,19 @@
-from flask import Flask, render_template, redirect, url_for
-app = Flask(__name__)
-@app.route('/contact', methods=['POST'])
-def handle_contact_form():
-    return redirect(url_for('thank_you'))
-@app.route('/thank-you')
-def thank_you():
-    return render_template('thank_you.html') 
-if __name__ == '__main__':
-    app.run(debug=True)                      
+from django.db import models
+class Restaurant(models.Model):
+    address = models.TextField()
+    def __str__(self):
+        return "Reataurant Details"
+from django.shortcuts import render
+from .models import Restaurant
+def contact_us(request):
+    try:
+        restaurant = Restaurant.objects.first()
+        address = restaurant.address
+    except AttributeError:
+        address = "Address not set."
+    return render(request, 'contact_us.html', {'address': address})
+    from django.urls import path
+    from .views import contact_us
+    urlpatterns = [
+        path('contact-us/', contact_us, name='contact_us'),
+    ]
