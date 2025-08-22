@@ -1,12 +1,15 @@
-from django.core.paginator import paginator
-form django.shortcuts import render
-from .models import MenuItem
-def menu_view(request):
-    menu_items = MenuItem.objects.all()
-    paginator = paginator(menu_items, 10)
-    page_number =  request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return render(request, 'menu.html', {'page_obj': page_obj})
+from django import template
+register = template.Library()
+@register.filter('coming_soon')
+def coming_soon(item):
+    if not item.available:
+        return "Coming Soon"
+     return item.name
+{% load menu_filters %}
+{% for item in menu_items %}
+   {{ item|coming_soon }} 
+{% endfor %}     
+
     
     
     
