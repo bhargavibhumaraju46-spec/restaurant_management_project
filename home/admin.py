@@ -1,6 +1,9 @@
-def generate_homepage_breadcrumb():
-    """
-    Generates a simple breadcrumb for the homepage.
-    """
-    return "Home"
-print(generate_homepage_breadcrumb())            
+pip install Flask
+from flask import Flask, render_template
+app = Flask(__name__)
+@app.route('/about')
+def about():
+    return render_template('about.html')
+    if __name__ == '__main__':
+        app.run(debug=True)
+python app.py             
