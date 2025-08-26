@@ -1,7 +1,4 @@
-from flask import Flask, render_template
-app = Flask(__name__)
-@app.route('/')
-def home():
-    return render_template('index.html')
-if __name__ == '__main__':
-    app.run(debug=True)   
+restaurant_name = "delicious Bites"
+restaurant_location = "Downtown Kamanur"
+homepage_title = f"{restaurant_name} - Best Restaurant in {restaurant_location} | official site"
+print(homepage_title)
