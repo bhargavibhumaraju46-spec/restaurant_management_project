@@ -1,36 +1,26 @@
-import datetime
-class Restaurantpage:
-    def __init__(self, title, description):
-        self.title = title
-        self.description = description
-        self.template = None
-        self.navigation_link = None
-def create_template(self, template_name):
-    self.template = template_name
-    print(f"template '{template_name}'created.")
-def add_navigation_link(self, link_text, link_url):
-    self.navigation_link = (link_text, link_url)
-    print(f"navigation link '{link_text}' added with URL '{link_url}'. ")
-def create_page(self):
-    print(f"page '{self.title}' created with description: {self.description}")
-    print(f"template: {self.template}")
-    print(f"navigation link: {self.navigation_link[0]} - {self.navigation_link[1]}")
-    def main():
-        task_title = "our story"
-        task_description = "a imple text description of the restaurant's history"
-        task_due_date = datetime.date(2025, 8, 29)
-        page = Restaurantpage(task_title, task_description)
-        template_name = "our_story_template"
-        page.create_template(template_name)
-        link_text = "our story"
-        link_url = "/our-story"
-        page.add_navigation_link(link_text, link_url)
-        page.create_page()
-        today = date.time.date.today()
-        if today == task_due_date:
-            print("task is due today.ensuring all details are complete.")
-       else:
-        print("task is not due today.")
-  if __name__ == "__main__":
-    main()           
-
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+def send_confirmation_email(user_email, hardcoded_email="example@example.com"):
+    sender_email = hardcoded_email
+    sender_pssword = "your_password"
+    receiver_emai = user_email
+    message = MIMEMultipart()
+    message["From"] = sender_email
+    message["To"] = receiver_email
+    message["subject"] = "Contact from submission confirmation"
+    body = "dear user,/n/nThankyou for submitting our contact form.we have received your message and will get back to you  soon /n/nbest regards,/n[your name]"
+    message.attach(MIMEText(body, "plain"))
+    try:
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.starttls()
+        server.login(sender_email, sender_password)
+        text = message.as_string()
+        server.sendmail(sender_email, receiver_email, text)
+        server.quit()
+        print("confirmation email sent successfully!")
+     except Exception as e:
+        print("error sending confirmation email:" str(e))
+        if __name__ == "__main__":
+            user_email = "user@example.com"
+            send_confirmation_email(user_email)   
