@@ -1,22 +1,20 @@
-class TeamMember:
-    def __init__(self, name, role, image_url="placeholder.jpg", description=""):
-        self.name = name
-        self.role = roleself.image_url = image_url
-        seld.description = description 
-class OurTeamPage:
-    def __init__(self):
-        self.team_members.append(member)
-    def display_team_members(self):
-        print("Our Team:")
-        for member in self.team_members:
-            print(f"Name: {member.name}")
-            print(f"Role: {member.role}")
-            print(f"Image: {member.image_url}")
-            print(f"Description: {member.description}")
-            print("-" *20)
-        our_team = OurTeamPage()
-        our_team.add_team_member("John Doe", "Head Chef", description="Expert in culinary delights.")
-        our_team.add_team_member("Jane smith", description="Friendly and efficient.")
-        our_team.display_team_members()    
-    
-            
+webpage_info = {
+    "status": "pending"
+    "due_date": "09/01/2025",
+    "task": "Improve 'about us' page content",
+    "task_description": "add more information to the 'about us' page, such as the restaurant's history or mission statement .make sure the formatting is presentable.",
+    "ad":{
+        "product": "bioderma exfoliating face wash",
+        "description":"dermatologist-tested face wash that exfoliates, refines textures&fades pigmentation",
+        "brand":"bioderma"
+        }
+    }
+print("webpage info:")
+print(f"status: {webpage_info['status']}")
+print(f"due date: {webpage_info['due_date]}")
+print(f"task: {webpage_info['task']}")
+print(f"task description:{webpage_info['task'_description]}")
+print("\nAd details:")
+print(f"product: {webapage_info['ad']['product']}")
+print(f"description: {wepage_info['ad']['description']}")
+print(f"brand: {webpage_info['ad']['brand']}")
