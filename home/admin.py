@@ -1,20 +1,62 @@
-webpage_info = {
-    "status": "pending"
-    "due_date": "09/01/2025",
-    "task": "Improve 'about us' page content",
-    "task_description": "add more information to the 'about us' page, such as the restaurant's history or mission statement .make sure the formatting is presentable.",
-    "ad":{
-        "product": "bioderma exfoliating face wash",
-        "description":"dermatologist-tested face wash that exfoliates, refines textures&fades pigmentation",
-        "brand":"bioderma"
-        }
+from django.shortcuts import render
+def home(request):
+    images = [
+        "/static/images/img1.jpg",
+        "/static/images/img2.jpg",
+        "/static/images/img3.jpg",
+    ]
+    return render(request,
+    "home.html", {"images": images})
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Carousel</title>
+    <style>
+    carousel {
+        width: 500px;
+        height: 400px;
+        margin: auto;
+        overflow: hidden;
+        position: relative;
+    }   
+    slides {
+        display: flex;
+        width: 100%;
+        animation: slide 12s
+ infinite;   
     }
-print("webpage info:")
-print(f"status: {webpage_info['status']}")
-print(f"due date: {webpage_info['due_date]}")
-print(f"task: {webpage_info['task']}")
-print(f"task description:{webpage_info['task'_description]}")
-print("\nAd details:")
-print(f"product: {webapage_info['ad']['product']}")
-print(f"description: {wepage_info['ad']['description']}")
-print(f"brand: {webpage_info['ad']['brand']}")
+    slides img {
+        width: 600px;
+        height: 400px;
+    }
+    @keyframes slide {
+        0% {transform:
+        translateX(0); }
+        33% {transform:
+        translateX(-600px); }
+        66% {transform:
+        translateX(-1200px); }
+        100% {transform:
+        translateX(0);}
+    }
+    </style>
+    </head>
+    <body>
+    <h1
+style="text-align:center;">Restaurant
+Image Carousel</h1>
+<div class="carousel">
+<div class="slides">
+{%for img in images %}
+<img src="{{ img }}"
+alt="carousel image">
+{% endfor %}
+</div>
+</div>
+</body>
+</html>
+from django.urls import path
+from .import views
+urlpatterns = [
+    path('', views.home, name='home'),
+    ]
