@@ -1,62 +1,48 @@
-from django.shortcuts import render
-def home(request):
-    images = [
-        "/static/images/img1.jpg",
-        "/static/images/img2.jpg",
-        "/static/images/img3.jpg",
-    ]
-    return render(request,
-    "home.html", {"images": images})
+from django.shortcuts import  render
+def contact(request):
+    opening_hours = {
+        "Monday": "9:00 AM - 10:00 PM",
+        "Tuesday": "9:00 AM - 10:00 PM",
+        "Wednesday": "9:00 AM - 10:00 PM",
+        "Thursday": "9:00 AM - 10:00 PM",
+        "Friday": "9:00 AM - 10:00 PM",
+        "Saturday": "9:00 AM - 10:00 PM",
+        "Sunday": "9:00 AM - 10:00 PM",
+    }
+      return render(request, "contact.html", {"opening_hours":opening_hours})
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Image Carousel</title>
+    <title>ontact Us</title>
     <style>
-    carousel {
-        width: 500px;
-        height: 400px;
-        margin: auto;
-        overflow: hidden;
-        position: relative;
-    }   
-    slides {
-        display: flex;
-        width: 100%;
-        animation: slide 12s
- infinite;   
-    }
-    slides img {
-        width: 600px;
-        height: 400px;
-    }
-    @keyframes slide {
-        0% {transform:
-        translateX(0); }
-        33% {transform:
-        translateX(-600px); }
-        66% {transform:
-        translateX(-1200px); }
-        100% {transform:
-        translateX(0);}
-    }
-    </style>
-    </head>
-    <body>
-    <h1
-style="text-align:center;">Restaurant
-Image Carousel</h1>
-<div class="carousel">
-<div class="slides">
-{%for img in images %}
-<img src="{{ img }}"
-alt="carousel image">
-{% endfor %}
-</div>
-</div>
-</body>
-</html>
+       body {font-family:Arial, sans-serif; text-align:center; margin:30px; }
+              hours-box {
+                display: inline-block;
+                padding: 20px solid
+                border-radius: 10px;
+                background:
+              }
+              h2 {color:}
+              u1 {list-style:none;
+              padding: 0; }
+              li {margin: 8px 0; }
+              </style>
+              </head>
+              <body>
+              <h1>contact Us</h1>
+              <div class ="hours-box">
+                <h2>Opening Hours</h2>
+                <u1>
+                {% for day, hours in opening_hours.items %}
+                <li><strong>{{ day }}:</strong>
+                {{ hours }}</li>
+                     {% endfor %}
+                      </ul>
+                      </div>
+                      </body>
+                      </html>
 from django.urls import path
 from .import views
 urlpatterns = [
-    path('', views.home, name='home'),
-    ]
+    path('contact/', views.contact, name='contact'),
+]                      
