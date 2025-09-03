@@ -1,7 +1,11 @@
-task_name = "Improve Contact us page Layout"
-status = "PENDING"
-due_date = "28/03/2025"
-print(f"Task: {task_name}")
-print(f"Status: {status}")
-print(f"Due Date: {due_date}")
+from bs4 import BeautifulSoup
+html = """
+"""
+soup = BeautifulSoup(html, 'html.parser')
+terms_link = soup.new_tag('a', href='/terms-of-service', text='Terms of Service')
+separator = soup.new_string('|')
+footer_p = soup.find('p')
+footer_p.append(separator)
+footer_p.append(terms_link)
+print(soup.prettify())
                                
