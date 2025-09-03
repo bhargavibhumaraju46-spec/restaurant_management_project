@@ -1,22 +1,11 @@
-from go.db import models
-class RestaurantInfo(models.Model):
-    opening_hours = models.TextField()
-    def __str__(self):
-        return "Restaurant Info"
-from .models import RestaurantInfo
-def opening_hours(request):
-    try:
-        info = RestaurantInfo.objects.first()
-        return {'opening_hours': info.opening_hours}
-    except AttributeError:
-        return {'opening_hours': 'Mon-Sat 10am-10pm, Sun 10am-8pm'}
-      TEMPLATES = [
-        {
-            'OPTIONS': {
-                'context_processors':[
-                    'your_app.context.opening_hours',
-                ],
-            },
-        },
-    ]
-                                   
+social_media_links = {
+    "Facebook" : "https://www.facebook.com/restaurant_placeholder",
+    "Instagram": "https://www.instagram.com/restaurant_placeholder",
+    }
+def add_social_media_to_footer(links):
+    footer_content = "Follow us on:\n"
+    for platform, link in links.item():
+        footer_content += f"{platform}": {link}\n"
+        rturn footer_content
+    footer = add_social_media_to_footer(social_media_links)
+    print(footer)                                 
