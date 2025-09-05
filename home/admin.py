@@ -1,7 +1,7 @@
-from flask import Flask, render_template
-app = Flask(__name__)
-@app.errorhandler(403)
-def forbidden(e):
-    return render_template('403.html'), 403
-if __name__ == '__main__':
-    app.run(debug=True)    
+def generate_meta_description(description):
+    meta_tag = f'<meta name="description" content="{description}">'
+    return meta_tag
+description = "welcome to our restaurant!"
+meta_description_tag = generate_meta_description(description)
+print(meta_description_tag)
+print(f"Add this to the <head> section:\n{meta_description_tag}")    
