@@ -1,21 +1,21 @@
 from django.db import models
-class Reservation(models.Model):
-    name = models.CharField(max_length=254)
-    date = models.DateTimeField()
+class RestaurantLocation(models.Model):
+    address = models.CharField(max_length=255)
+    latitude = models.DecimalField(max_digits=10, decimal_places=7)
+    longitude = models.DecimalField(max_digits=10, decimal_places=7)
+    description = models.TextField(blank=True)
+ def __str__(self):
+    return self.address 
 from django.shortcuts import render
-from django.urls import reverse_lazy
-from .models import Reservation
-def homepage(request):
-    context = {
-        'reservations_url': reverse_lazy('make_reservation'),
-        'description': 'Book your spot easily with our reservation system.'
-    }
-    return render(request, 'homepage.html', context)
+from .models import RestaurantLocation.objects.first()
+context = {'location': location}
+return render(request, 'locations.html', context) 
 from django.urls import path
 from .import views
 urlpatterns = [
-    path('', views.homepage, name='homepage'),
-    path('make-reservation/', views.make_reservation, name='make_reservation'),
-]
-def make(request):
-    return render(request, 'reservation.html')  
+    path('locations/', views.locations, name='locations'),
+]     
+from django.contrib import admin
+from .models import RestaurantLocation
+admin.site.register(RestaurantLocation
+)
