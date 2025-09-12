@@ -1,15 +1,17 @@
-from django.db import models
-class SocialMediaLink(models.Model):
-    platform = models.CharField(max_length=50)
-    icon = models.CharField(max_length=50)
-    url = models.URLField()
-    def __str__(self):
-        return self.platform
-from django.contrib import admin
-from .models import SocialMediaLink
-admin.site.register(SocialMediaLink)
+from django.urls import path
+from .import views
+urlpatterns = [
+    path('', views.homepage, name='homepage'),
+    path('manu/', views.menu, name='menu'),
+    path('about-us/', views.about_us, name='about_us'),
+    path('contact-us/', views.contact_us, name='contact_us'),        
+    ]
 from django.shortcuts import render
-from .models import SocialMediaLink
 def homepage(request):
-    social_links = SocialMediaLink.objects.all()
-    return render(request, 'homepage.html', {'social_links': social_links})        
+    return render(request, 'homepage.html')
+def menu(request):
+    return render(request, 'menu.html')
+def about_us(request):
+    return render(request, 'about_us.html')
+def contact_us(request):
+    return render(request, 'contact_us.html')            
