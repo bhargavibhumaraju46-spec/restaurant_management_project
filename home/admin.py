@@ -1,20 +1,9 @@
-from rest_framework import generics
-from .models import MenuCategory
-from .serializers import MenuCategorySerializer
-from rest_framework import serializers
-from .models import MenuCategory
-class MenuCategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MenuCategory
-        fields = ['name']
-from rest_framework import generics
-from .models import MenuCategory
-from .serializers import MenuCategorySerializer
-class MenuCategoryList(generics.ListAPIView):
-    queryset = MenuCategory.objects.all()
-    serializer_class = MenuCategorySerializer
-from django.urls import path
-from .views import MenuCategoryList
-urlpatterns = [
-    path('menu-categories/', MenuCategoryList.as_view(), name='menu-categories'),
-]                    
+from django.db import models
+class OrderStatus(model.Model):
+    name = models.CharField(max_length=100)
+    def __str__(self):
+        return self.name
+        PENDING = 'pending'
+        PROCESSING = 'processing'
+        COMPLETED = 'completed'
+        CANCELLED = 'cancelled'                   
