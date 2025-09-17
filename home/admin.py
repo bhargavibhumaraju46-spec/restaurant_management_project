@@ -1,9 +1,4 @@
 from django.db import models
-class OrderStatus(model.Model):
-    name = models.CharField(max_length=100)
-    def __str__(self):
-        return self.name
-        PENDING = 'pending'
-        PROCESSING = 'processing'
-        COMPLETED = 'completed'
-        CANCELLED = 'cancelled'                   
+from .models import OrderStatus
+class Order(models.Model):
+    status = models.ForeignKey(OrderStatus, on_delete=model.SET_NULL, null=True)                   
