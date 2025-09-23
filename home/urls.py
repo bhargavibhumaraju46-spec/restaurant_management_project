@@ -3,4 +3,4 @@ from .views import *
 
 urlpatterns = [
     
-]
+}
