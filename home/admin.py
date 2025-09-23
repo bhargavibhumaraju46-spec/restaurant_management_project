@@ -16,4 +16,4 @@ def validate_email_address(email):
 fro utils.validation_utils import validate_email_address
 email = "example@example.com"
 is_valid = validate_email_address(email)
-print(is_valid)              
+print(is_valid)
