@@ -1,33 +1,35 @@
 from django.db import models
-class Order(models.Model):
-    STATUS_CHOICES = [
-        ('Pending', 'Pending'),
-        ('Processing', 'Processing'),
-        ('Cancelled', 'Cancelled'),
-        ('Completed', 'Completed'),
-    ]
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pending')
-from rest_framework import viewsets
+class ContactFormSubmission(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    message = models.TextField()
+    def __str__(self):
+        return f"{self.name} - {self.email}"
+from rest_framework import serializers
+from .models import ContactFormSubmission
+class ContactFormSubmissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactFormSubmission
+        fields = ['name', 'email', 'message']
+from rest_framework import status
 from rest_framework.response import Response
-from rest_framework import status    
-from .models import Order
-from .serializers import OrderSerializer
-class OrderViewSet(viewsets.ModelViewSet):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
-    def cancel_order(self, request, pk=None):
-        try:
-            order = Order.objects.get(pk=pk)
-            order.status = 'Cancelled'
-            order.save()
-            return Response({"message": "Order cancelled"}, status=status.HTTP_200_OK)
-          except Order.DoesNotExist:
-            return Response({"error": "Order not found"}, status=status.HTTP_404_NOT_FOUND)
+from rest_framework.generics import CreateAPIView
+from .models import ContactFormSubmission
+from .serializers import ContactFormSubmissionSerializer
+class ContactFormSubmissionView(CreateAPIView):
+    queryset = ContactFormSubmission.objects.all()
+    serializer_class = ContactFormSubmissionSerializer
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 from django.urls import path
-form rest_framework import routers
-from .views import OrderViewSet
-router = routers.DefaultRouter()
-router.register(r'order', OrderViewSet, basename='orders')
-urlpatterns = [
-    path('orders/<int:pk>/cancel/', OrderViewSet.as_view({'delete': 'cancel_order'}), name='cancel-order'),
-] + router.urls               
+from .views import ContactFormSubmissionView
+urlpattererns = [
+    path('contact/', ContactFormSubmissionView.as_view(), name='contact_form_submission'),
+    ]
+
+
+]
