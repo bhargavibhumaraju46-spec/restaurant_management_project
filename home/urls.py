@@ -1,39 +1,241 @@
 from django.db import models
+from .utils import calculate_discount
 class Order(models.Model):
-    STATUS_CHOICESS = [
-        ('Pending', 'Pending'),
-        ('Processing', 'Processing'),
-        ('Delivered', 'Delivered'),
-    ]
-    status = models.CharField(max_length=10, choices=STATUS_CHOICESS, default='pending')
-from rest_framework import Serializers
-from .models import Order
-class OrderStatusSerializer(Serializers.ModelSerializer):
-    class Meta:
-        model = Order
-        fields =['id', 'staus']
-from rest_framework import status
-from rest_framework.response import Response        
-from rest_framework.views import APIView
-from .models import Order
-from .serializers import OrderStatusSerializer
-class UpdateOrderStatusView(APIView):
-    def post(self, request):
-        order_id = request.data.get('order_id')
-        new_status = request.data.get('status')
-        try:
-            order = Order.objects.get(id = order_id)
-            except Order.DoesNotExist:
-                return Response({"error": "Invalid order ID"}, status=status.HTTP_400_BAD_REQUEST)
-                if new_status not in [choice[0] for choice inOrder.STATUS_CHOICESS]:
-                    return Response({'error': 'Invalid status update'}, status=status.HTTP_400_BAD_REQUEST)
-                    order.status = new_status
-                    order.save()
-                    serializer = OrderStatusSerializer(order)
-                    return Response(serializer.data, status.HTTP_200_OK)
-from django.urls import path
-from .views import UpdateOrderStatusView
-                    urlpatterns = [
-                        path('update-order-status/', UpdateOrderStatusView.as_view(), name='update-order-status'),
+    def calculate_total(self):
+        total = 0
+        for item in self.orderitem_set.all():
+            item_price = item.product.price * item.quantity
+            discounted_price = calculate_discount(item_price, item.product, self)
+            total += discounted_price
+            return total
+ class OrderItem(models.Model):
+    order = models.ForeignKey(Order on_delete=models.CASCADE)
+    product = models.ForeignKey('products.product', on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    from orders.models import Order, OrderItem
+    from products.models import Product
+  product1 = product.objects.create(price=100)
+  procuct2 = product.objects.create(price=200)
+  order = Order.objects.create()
+  OrderItem.objects.create(order=order, procuct=product1, quantity=2)
+  OrderItem.objects.create(order=order, procuct=procuct2, quantity=1)
+  total = order.calculate_total()
+  print(total)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ]    
 
