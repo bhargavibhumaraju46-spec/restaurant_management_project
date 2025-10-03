@@ -1,12 +1,9 @@
 #orders/models.py
 from django.db import models
 class ordermanager(models.mamager):
-    def pending_order(self):
-        return self.filer(status='pending')
-        class order(models.model):
-            status_choices=[
-                ('pending','pending'),
-                ('shipped','shipped'),
-                ('delivered','delivered'),
-                ]
-                status=models.charfield(max_length=10, choices=status_choices,default='pending')
+    def pending_orders(self):
+        return self.filter(status='pending')
+        def shipped_orders(self):
+            return self.filter(status='shipped')
+            def by_status(self,status):
+                return self.filter(status=status)
