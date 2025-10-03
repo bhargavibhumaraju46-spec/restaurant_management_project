@@ -1,12 +1,12 @@
-from rest_framework import generics
-from .models import Table
-from .serializers import TableSerializer
-class TableDetailView(generics.RetrieveAPIView):
-    queryset = Table.objects.all()
-    serializer_class = TableSerializer
-    lookup_field = 'pk'
-from django.urls import path
-from .views import TableDetailView
-urlpattern = [
-    path('api/tables/<ink:pk>/', TableDetailView.as_view(), name='table-detail'),
-]    
+#orders/models.py
+from django.db import models
+class ordermanager(models.mamager):
+    def pending_order(self):
+        return self.filer(status='pending')
+        class order(models.model):
+            status_choices=[
+                ('pending','pending'),
+                ('shipped','shipped'),
+                ('delivered','delivered'),
+                ]
+                status=models.charfield(max_length=10, choices=status_choices,default='pending')
