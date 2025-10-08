@@ -1,31 +1,9 @@
 from django.db import models
-class MenuCategory(models.Model):
-    name = models. CharField(max_length=255)
-    def __str__(self):
-        return self.name
-from rest_framework import serializers
-from .models import MenuCategory
-class MenuCategorySerializer(serializers.MenuCategorySerializer):
-    class Meta:
-        models = MenuCategory
-        fields = ['id', 'name']
-from rest_framework import viewsets
-from .models import MenuCategory
-from .serializers import MenuCategory
-class MenuCategoryViewSet(viewsets.ModelViewSet):
-    queryset = MenuCategory.objects.all()
-    serializer_class = MenuCategorySerializer
-from django.urls import path, include
-from rest_framework import routers
-from .views import MenuCategoryViewSet
-router = routers.DefaultRouter()
-router.register(r'menu-categories', MenuCategoryViewSet)
-urlpatterns = [
-    path('', include(router.urls)),
-]                    
-from django.contrib import admin
-from django.urls import path, include
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/home/', include('home.urls')),
-]
+from django.contrib.auth.models import User
+from .models import MenuItem
+class UserReview(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    raring = models.IntegerField()
+    comment = models.TextField()
+    review_date = models.DateTimeField(auto_now_add=True)                   
