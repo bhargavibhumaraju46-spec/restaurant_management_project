@@ -1,30 +1,25 @@
-from django.db import models
-class MenuCategory(models.Models):
-    name = models.CharField(max_length=100)
-    def __str__(self):
-        return self.name
-class MenuItem(models.Model):
-    name = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    description = models.TextField()
-    category = models.ForeignKey(MenuCategory, on_delete=models.CASCADE)
-      def __str_(self):
-        return self.name
-from rest_framework import serializers
-from .models import MenuItem
-class MenuItemSerializer(serializers.ModelSerializer):
-    category = serializers.StringRelatedField()
-    class Meta:
-        model = MenuItem
-        fields  = ['name', 'price', 'description', 'category']
-from rest_framework import generics
+from rest_framework.response import response
+from rest_framework import status
+from rest_framework.views import APIView
 from .models import MenuItem
 from .serializers import MenuItemSerializer
-class MenuItemListAPIView(generics.ListAPIView):
-    queryset = MenuItem.objects.all()
-    serializer_class = MenuItemListAPIView
-from django.urls import path
-from .views import MenuItemListAPIView
-urlpatterns = [
-    path('menu-items/', MenuItemListAPIView.as_view(), name='menu-items'),
-]                              
+from django.db.models import Q
+class MenuItemByPriceRangeView(APIView):
+    def get(self, request):
+        try: 
+            min_price = request.GET.get('min_price', None)
+            max_price = request.GET.get('max_price', None)
+        if min_price is None or max_price is None:
+            return Response({"error": "Both min_price and max_price are required."}, status=status.HTTP_400_BAD_REQUEST)
+            try:
+                min_price = float(min_price)
+                max_price = float(max_price)
+            except ValueError:
+                return Response({"error": "Invalid price values. prices must be numbers."}), status=status.HTTP_400_BAD_REQUEST)
+                if min_price > max_price:
+                    return Response({"error": "min_price cannot be greater than max_price."}), status=status.HTTP_400_BAD_REQUEST)
+                    menu_items = MenuItem.objects.filter(price__gte=min_price, price_lte=max_price)
+                    serializers = MenuItemSerializer(menu_items, many=True)
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+                except Exception as e:
+                    return Response({"error": str(e)}, status.HTTP_500_INTERNAL_SERVER_ERROR)    
