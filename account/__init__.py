@@ -1,12 +1,30 @@
-def calculate_order_discount(order_total, discount_percentage):
-    if not isinstance(order_total, (int, float)) or not isinstance(discount_percentage, (int, float)):
-        raise TypeError("Both order_total and discount_percentage must be numeric values")
-       if order_total < 0 or discount_percantage < 0:
-        raise ValueError("order_total and discount_percentage must not be negative")
-        discount_amount = order_total * (discount_percantage / 100)
-        return discount_amount
-if __name__ == "__main__":
-    order_total = 1000
-    discount_percantage = 10
-    discount_amount = calculate_order_discount(order_total, discount_percantage)
-    print(f"Discount Amount: {discount_amount}")                       
+from django.db import models
+class MenuCategory(models.Models):
+    name = models.CharField(max_length=100)
+    def __str__(self):
+        return self.name
+class MenuItem(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.TextField()
+    category = models.ForeignKey(MenuCategory, on_delete=models.CASCADE)
+      def __str_(self):
+        return self.name
+from rest_framework import serializers
+from .models import MenuItem
+class MenuItemSerializer(serializers.ModelSerializer):
+    category = serializers.StringRelatedField()
+    class Meta:
+        model = MenuItem
+        fields  = ['name', 'price', 'description', 'category']
+from rest_framework import generics
+from .models import MenuItem
+from .serializers import MenuItemSerializer
+class MenuItemListAPIView(generics.ListAPIView):
+    queryset = MenuItem.objects.all()
+    serializer_class = MenuItemListAPIView
+from django.urls import path
+from .views import MenuItemListAPIView
+urlpatterns = [
+    path('menu-items/', MenuItemListAPIView.as_view(), name='menu-items'),
+]                              
