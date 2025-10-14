@@ -1,18 +1,12 @@
-from django.db import models
-class Restaurant(models.Model):
-    opening_hours = models.CharField(max_length=50, dafault="11:00 AM - 11:00 PM (EST)")
-from rest_framework.response import response
-from rest_framework.views import APIView
-from .models import Restaurant
-class RestaurantHourView(APIView):
-    def get(self, request):
-        restaurant = Restaurant.objects.first()
-        if restaurant:
-            return Response({"opening_hours": restaurant.opening_hours})
-        else:
-            return Response({"error": "No restaurant found"},status=404)
-from django.urls import path
-from .views import RestaurantHourView
-urlpatterns = [
-    path('restaurant/hours/', RestaurantHourView.as_view(), name='restaurant-hours'),
-]                
+def calculate_order_discount(order_total, discount_percentage):
+    if not isinstance(order_total, (int, float)) or not isinstance(discount_percentage, (int, float)):
+        raise TypeError("Both order_total and discount_percentage must be numeric values")
+       if order_total < 0 or discount_percantage < 0:
+        raise ValueError("order_total and discount_percentage must not be negative")
+        discount_amount = order_total * (discount_percantage / 100)
+        return discount_amount
+if __name__ == "__main__":
+    order_total = 1000
+    discount_percantage = 10
+    discount_amount = calculate_order_discount(order_total, discount_percantage)
+    print(f"Discount Amount: {discount_amount}")                       
